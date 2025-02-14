@@ -3,12 +3,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function Header() {
   const { data: session, status } = useSession();
   useEffect(() => {
     if (status === "unauthenticated") {
       signIn("onshape");
+      toast.success("Authenticat Successfully");
     }
   }, [status]);
 
