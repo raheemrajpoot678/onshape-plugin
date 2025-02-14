@@ -2,9 +2,15 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function Header() {
   const { data: session, status } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      signIn("onshape");
+    }
+  }, [status]);
 
   console.log(session);
 
@@ -47,20 +53,21 @@ export default function Header() {
           ) : session?.authenticated ? (
             <div className="flex items-center space-x-3">
               <p className="text-white">Welcome, {session.user?.name}</p>
-              <button
+              {/* <button
                 onClick={() => signOut()}
                 className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300"
               >
                 Logout
-              </button>
+              </button> */}
             </div>
           ) : (
-            <button
-              onClick={() => signIn("onshape")}
-              className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300"
-            >
-              Login with Onshape
-            </button>
+            // <button
+            //   onClick={() => signIn("onshape")}
+            //   className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300"
+            // >
+            //   Login with Onshape
+            // </button>
+            ""
           )}
         </div>
       </nav>
